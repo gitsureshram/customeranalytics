@@ -35,7 +35,6 @@ def dump(partner,dictionary,f) :
 
         tmparray = key.split("-")
 
-        #print "JJJJJJ " + tmparray[0] + "  KKKK" + str(partner_value)
         if tmparray[0] == partner :
 
             if partner in tmpDict:
@@ -82,6 +81,14 @@ if __name__ == '__main__':
 
         print "%s: %s" % (partner, masterCompanies[partner])
 
+        print "************************** Distinct Products *******************************"
+        f = open("../product_vector.csv", 'w')
+        dump(partner, distinctProducts, f)
+        f.close()
+
+
+if False :
+
         print "************************** Master Products *******************************"
         f = open("../product_master.csv", 'w')
         dump(partner,masterProducts,f)
@@ -96,6 +103,7 @@ if __name__ == '__main__':
         f = open("../os_master.csv", 'w')
         dump(partner,masterOs,f)
         f.close()
+
 
         print "************************** Distinct Products *******************************"
         f = open("../product_vector.csv", 'w')
