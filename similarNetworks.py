@@ -39,8 +39,6 @@ def explore(data) :
 
 def selectSample() :
 
-
-    # TODO: Select three indices of your choice you wish to sample from the dataset
     indices = []
 
     indices.append(92)
