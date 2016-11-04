@@ -151,7 +151,7 @@ def normalizeFeatures(data,samples) :
     display(log_samples)
 
     print "............................ End Normalize / Feature scalaing using Log ......................................................."
-    return normalizedData
+    return normalizedData, log_samples
 
 def removeOutliers(normalizedData) :
 
@@ -248,7 +248,7 @@ def performPCA(good_data,log_samples) :
 
     return pca,reduced_data,pca_samples
 
-def performClustering(reduced_data,samples) :
+def performClustering(reduced_data,pca_samples) :
 
     print "............................Inside Clustering ......................................................."
 
@@ -269,7 +269,7 @@ def performClustering(reduced_data,samples) :
         centers = clusterer.cluster_centers_
 
         # TODO: Predict the cluster for each transformed sample data point
-        #sample_preds = clusterer.predict(pca_samples)
+        sample_preds = clusterer.predict(pca_samples)
 
         # TODO: Calculate the mean silhouette coefficient for the number of clusters chosen
         score = silhouette_score(reduced_data, preds)
@@ -282,7 +282,7 @@ def performClustering(reduced_data,samples) :
 
     print "............................End Clustering ......................................................."
 
-    rs.cluster_results(reduced_data, preds, centers, reduced_data)
+    rs.cluster_results(reduced_data, preds, centers, pca_samples)
 
     return preds, centers, pca_samples
 
@@ -324,9 +324,9 @@ if __name__ == '__main__':
     samples = selectSample()
     featureRelevance(data)
     featureDistributions(data)
-    normalizedData = normalizeFeatures(data,samples)
+    normalizedData,log_samples = normalizeFeatures(data,samples)
     good_data = removeOutliers(normalizedData)
-    pca,reduced_data,pca_samples = performPCA()
+    pca,reduced_data,pca_samples = performPCA(good_data,log_samples)
     preds, centers, pca_samples = performClustering(reduced_data,pca_samples)
     identifyCenter(pca,reduced_data, preds, centers, pca_samples)
     #displayPredictons(sample_preds,outliers,pca_samples)
